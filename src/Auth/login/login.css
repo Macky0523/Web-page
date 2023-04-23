@@ -12,7 +12,7 @@ html, body {
 * {
     box-sizing: border-box;
     margin: 1px;
-    padding: 2px;
+    padding: 1px;
   }
   
   body {
@@ -61,4 +61,14 @@ html, body {
     border-radius: 5px;
     border: 1px solid #ccc;
   }
-  
+  button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #0077b6;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+ 
