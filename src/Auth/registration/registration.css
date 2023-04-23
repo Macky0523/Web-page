@@ -1,0 +1,33 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.registration-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgba(232, 229, 236, 0.5);
+}
+  
+  .registration-page h1 {
+    font-size: 36px;
+  }
+  
+  .registration-page form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .registration-page .form-group {
+    margin-bottom: 20px
+  }  
