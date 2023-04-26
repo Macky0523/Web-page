@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './registration.css';
+import axios from 'axios';
+
 
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +23,9 @@ const RegistrationPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // handle form submission here
+    axios.post('http://127.0.0.1:8000/api/v1/accounts/users/', formData)
+      .then(response => console.log(response))
+      .catch(error => console.error(error));
   };
 
   return (

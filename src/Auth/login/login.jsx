@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
+
+function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/v1/accounts/users/', {
+        username,
+        password,
+      }).then (response => {
+        console.log(response.username,password)});
+      localStorage.setItem('access_token', response.data.access);
+      localStorage.setItem('refresh_token', response.data.refresh);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+      // Redirect to another page or update UI
+    } catch (error) {
+      console.error(error);
+      // Handle error
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', position: 'relative' }}>
+        <CardContent>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '20rem' }}>
+          <LockPersonIcon color="secondary"/>
+            <p>Login</p>
+            <TextField
+              style={{ margin: '1rem' }}
+              label="Username"
+              variant="outlined"
+              value={username}
+              onChange={(event) => setUsername(event.target.value) } required
+            />
+            <TextField
+              style={{ margin: '1rem' }}
+              label="Password"
+              variant="outlined"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)} required
+            />
+            <Button
+              style={{ margin: '1rem' }}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Login
+            </Button>
+          </form>
+          <p >
+        Create Account? <Link to="/register">Register</Link>
+      </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export default Login;
