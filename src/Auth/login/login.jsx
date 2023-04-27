@@ -6,12 +6,13 @@ import CardContent from '@mui/material/CardContent';
 import axios from '../../plugins/axios';
 import { Link, useNavigate} from 'react-router-dom';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
-
-
+import Snackbar from '@mui/material/Snackbar';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -26,10 +27,17 @@ function Login() {
       // Redirect the user to the homepage or the page you want to show after login
       navigate("/profile");
     } catch (error) {
-      console.log(error);
+      console.error("Invalid Username or Password");
+      console.error(error);
+      setErrorMessage('Invalid Username or Password');
+      setOpen(true);
     }
+    
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -65,6 +73,12 @@ function Login() {
           <p >
         Create Account? <Link to="/register">Register</Link>
       </p>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={open}
+        onClose={handleClose}
+        message={errorMessage}
+      />
         </CardContent>
       </Card>
     </div>

@@ -50,7 +50,8 @@ import React, { useState } from 'react';
         navigate("/activate")
         // Redirect the user to the homepage or the page you want to show after logi
       } catch (error) {
-        console.log(error);
+        console.error("Invalid Entry");
+        console.error(error);
       }
     };
   
