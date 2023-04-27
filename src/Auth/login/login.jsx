@@ -3,31 +3,33 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import axios from "../../plugins/axios";
+import { Link, useNavigate} from 'react-router-dom';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
+
+
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/v1/accounts/users/', {
-        username,
-        password,
-      }).then (response => {
-        console.log(response.username,password)});
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
-      // Redirect to another page or update UI
+      const response = await axios.post('accounts/token/login/', {
+        username: username,
+        password: password,
+      });
+      console.log(response.data);
+      localStorage.setItem('token', response.data.auth_token);
+      // Redirect the user to the homepage or the page you want to show after login
+      navigate("/profile");
     } catch (error) {
-      console.error(error);
-      // Handle error
+      console.log(error);
     }
   };
+
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
