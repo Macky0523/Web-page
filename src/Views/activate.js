@@ -17,8 +17,8 @@ function Activate() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('accounts/activation/', {
-        ui:uid,
+      const response = await axios.post('accounts/users/activation/', {
+        uid:uid,
         token:token,
       });
       console.log(response.data);

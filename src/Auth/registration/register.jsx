@@ -47,7 +47,7 @@ import React, { useState } from 'react';
             gender:gender,
           });
         console.log(response.data);
-        navigate("/")
+        navigate("/activate")
         // Redirect the user to the homepage or the page you want to show after logi
       } catch (error) {
         console.log(error);
