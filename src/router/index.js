@@ -3,6 +3,9 @@ import App from "../App";
 import Profile from "../Views/profile"
 import Register from "../Auth/registration/register";
 import Activate from "../Views/activate";
+import LandingPage from "../Views/landingpage";
+import Login from "../Auth/login/login";
+import BookingPage from "../Views/booking";
 const router = createBrowserRouter([
     {
       path: "/",
@@ -19,7 +22,20 @@ const router = createBrowserRouter([
     {
       path:"/activate",
       element: <Activate/>
+    },
+    {
+      path:"/home",
+      element: <LandingPage/>
     }
+    ,
+    {
+      path:"/login",
+      element: <Login/>
+    },
+    {
+      path:"/booking",
+      element: <BookingPage/>
+    },
     
   ]);
 

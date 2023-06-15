@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import axios from '../../plugins/axios';
 import { Link, useNavigate} from 'react-router-dom';
-import LockPersonIcon from '@mui/icons-material/LockPerson';
+import Logo from '../../components/logo/logo';
 import Snackbar from '@mui/material/Snackbar';
 
 function Login() {
@@ -25,7 +25,7 @@ function Login() {
       console.log(response.data);
       localStorage.setItem('token', response.data.auth_token);
       // Redirect the user to the homepage or the page you want to show after login
-      navigate("/profile");
+      navigate("/home");
     } catch (error) {
       console.error("Invalid Username or Password");
       console.error(error);
@@ -41,10 +41,10 @@ function Login() {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', position: 'relative' }}>
+      <Card style={{ backgroundColor: 'rgba(29, 110, 99, .5)', position: 'relative' }}>
         <CardContent>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '20rem' }}>
-          <LockPersonIcon color="secondary"/>
+          <Logo />
             <p>Login</p>
             <TextField
               style={{ margin: '1rem' }}
@@ -62,7 +62,7 @@ function Login() {
               onChange={(event) => setPassword(event.target.value)} required
             />
             <Button
-              style={{ margin: '1rem' }}
+              style={{ margin: '1rem', backgroundColor: 'rgba(245, 69, 69, .80)' }}
               variant="contained"
               color="primary"
               type="submit"
@@ -71,7 +71,7 @@ function Login() {
             </Button>
           </form>
           <p >
-        Create Account? <Link to="/register">Register</Link>
+        Don't Have an Account? <Link to="/register" style={{ color: 'white' }}>Register</Link>
       </p>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

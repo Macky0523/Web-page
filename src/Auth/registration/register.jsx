@@ -58,7 +58,7 @@ import React, { useState } from 'react';
   
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', position: 'relative' }}>
+        <Card style={{ backgroundColor: 'rgba(29, 110, 99, .5)', position: 'relative' }}>
           <CardContent>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '20rem' }}>
             <LockPersonIcon color="secondary"/>
@@ -125,12 +125,12 @@ import React, { useState } from 'react';
             ))} required
           </TextField>
               <Button
-                style={{ margin: '1rem' }}
-                variant="contained"
-                color="primary"
-                type="submit"
+                style={{ margin: '1rem', backgroundColor: 'rgba(245, 69, 69, .80)' }}
+              variant="contained"
+              color="primary"
+              type="submit"
               >
-                Login
+                Proceed
               </Button>
             </form>
             <p >
