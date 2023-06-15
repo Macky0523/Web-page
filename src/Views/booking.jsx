@@ -5,17 +5,17 @@ import axios from '../plugins/axios'
 
 function BookingPage() {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [Problem, setProblem] = useState('');
+  const [Additional_Info, setAdditional_Info] = useState('');
   const [user_loc, setLocation] = useState('');
   const [id, setId] = useState('');
 
   const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+    setProblem(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    setAdditional_Info(e.target.value);
   };
 
   const handleLocationChange = (e) => {
@@ -37,11 +37,11 @@ function BookingPage() {
       }
     })
     const data = {
-      title : title,
-      description: description,
       user_loc: user_loc,
       requester: id,
-  
+      Problem : Problem,
+      Additional_Info : Additional_Info,
+
 
 
     };
@@ -82,14 +82,14 @@ function BookingPage() {
       />
       <TextField
         label="Title"
-        value={title}
+        value={Problem}
         onChange={handleTitleChange}
         fullWidth
         margin="normal"
       />
       <TextField
         label="Description"
-        value={description}
+        value={Additional_Info}
         onChange={handleDescriptionChange}
         fullWidth
         multiline

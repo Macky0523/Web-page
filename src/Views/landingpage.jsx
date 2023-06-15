@@ -1,10 +1,11 @@
-import { Grid, Paper, Typography,Container, List, ListItem, ListItemText,Button } from "@mui/material";
+import { Grid, Paper, Typography,Container, List, Button, IconButton, CardActions  } from "@mui/material";
 import NavBar from "../components/navbar/navbar";
 import { useEffect, useState } from "react";
 import axios from "../plugins/axios";
 import { useNavigate } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function LandingPage() {
     const [firstName, setFirstName] = useState('');
@@ -26,6 +27,27 @@ function LandingPage() {
           }
         })
       })
+
+      const [requests, setRequests] = useState([]);
+      useEffect(() => {
+        const token = localStorage.getItem('token');
+        axios
+          .get('post/', {
+            headers: {
+              'Authorization': `Token ${token}`
+            }
+          })
+          .then((response) => {
+            // Log the fetched data
+            console.log(response.data);
+            // Set the fetched data to the 'requests' state
+            setRequests(response.data);
+          })
+          .catch((error) => {
+            // Handle error
+            console.error('Error fetching data:', error);
+          });
+      }, []);
 
 
       const handleLogout = async () => {
@@ -51,7 +73,20 @@ function LandingPage() {
         navigate('/booking'); // Replace '/booking' with the actual URL of the booking/request page
       };
       
-    
+      const handleDeleteRequest = async (requestId) => {
+        try {
+          // Make a DELETE request to delete the request with the specified ID
+          const response = await axios.delete(`post/${requestId}/`);
+          console.log(response.data); // Log the response data for debugging purposes
+      
+          // If the request is successfully deleted, update the list of requests
+          setRequests((prevRequests) => prevRequests.filter((request) => request.id !== requestId));
+        } catch (error) {
+          console.log("Error deleting request:", error);
+        }
+      };
+
+
   return (
     <Container maxWidth="lg" style={{ backgroundColor: 'rgba(227, 12, 5, 0.5)' }}>
     <NavBar onLogout={handleLogout} />
@@ -84,11 +119,43 @@ function LandingPage() {
           <Typography variant="h5" align="center" sx={{ p: 2 }}>
             Booking
           </Typography>
+          <Button align="center" variant="contained" color="primary" onClick={handleGoToRequestPage}>
+            Request
+          </Button>
+          <div style={{ maxHeight: '400px', overflow: 'auto' }}>
           <List>
-    </List>
-      <Button align = "center" variant="contained" color="primary" onClick={handleGoToRequestPage}>
-                Request
-              </Button>
+            {requests
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+              .map((request) => (
+                <Card key={request.id} variant="outlined" style={{ marginBottom: "1rem" }}>
+                  <CardContent>
+                  <Typography variant="body1" gutterBottom>
+                    Requester: {firstName} {lastName} {/* Replace "name" with the actual attribute of the User model */}
+                  </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      Problem: {request.Problem}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      Info: {request.Additional_Info}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      Location: {request.user_loc}
+                    </Typography>
+                    {/* Add any additional information you want to display */}
+                  </CardContent>
+                  <CardActions>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleDeleteRequest(request.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              ))}
+          </List>
+          </div>
         </Paper>
       </Grid>
 
